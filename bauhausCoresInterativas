@@ -1,0 +1,109 @@
+float w, h; //variáveis medidas paramétricas
+int x = 220, y = 44, z = 355; //variáveis de cores
+int t = 220; //variável extra tetraédrica
+int b1 = 100, b2 = 20; //variáveis do brilho
+
+void setup() {
+  size(800, 800);
+  w = width/600.0;
+  h = height/600.0;
+  colorMode(HSB, 360, 100, 100);
+  frameRate(4);
+}
+
+void draw() {
+  noStroke();
+
+  //fundo azul
+  background(x, 76, b1);
+  //três triângulos azul marinho
+  fill(x, 76, b2);
+  triangle(100*w, 0, 100*w, 100*h, 0, 100*h);
+  triangle(100*w, 100*h, 200*w, 0, 200*w, 100*h);
+  triangle(200*w, 100*h, 300*w, 0, 300*w, 100*h);
+  //quadrado amarelo
+  fill(y, 80, b1);
+  rect(300*w, 0, 600*w, 300*h);
+  //arco rosa grande
+  fill(z, 75, b1);
+  arc(300*w, 410*h, 645*w, 600*h, radians(180), radians(270));
+  //arco azul grande
+  fill(t, 76, b1);
+  arc(300*w, 410*h, 645*w, 600*h, radians(270), radians(360));
+  //retângulo azul marinho metade de baixo
+  fill(t, 76, b2);
+  rect(0, 300*h, 600*w, 600*h);
+  //arco amarelo grande(gambiarra maxima)
+  fill(y, 80, b1);
+  arc(300*w, 261*h, 608*w, 445*h, radians(10), radians(170), CHORD);
+  //elipse branca
+  fill(0, 0, b1);
+  ellipse(300*w, 300*h, 300*w, 300*h);
+  //elipse azul
+  fill(x, 76, b1);
+  ellipse(300*w, 300*h, 175*w, 175*h);
+  //arco azul marinho
+  fill(t, 76, b2);
+  arc(300*w, 300*h, 300*w, 300*h, radians(90), radians(180));
+  //arco rosa pequeno
+  fill(z, 75, b1);
+  arc(300*w, 300*h, 175*w, 175*h, radians(90), radians(180));
+  //três retângulos rosas
+  rect(450*w, 300*h, 24*w, 600*h);
+  rect(495*w, 300*h, 24*w, 600*h);
+  rect(540*w, 300*h, 24*w, 600*h);
+
+  //cores triádicas
+  if (keyPressed && keyCode == LEFT) {
+    x = int(random(0, 360));
+    y = (x + 120) % 360;
+    z = (y + 120) % 360;
+
+    println("Você está pressionando a tecla LEFT para cores triádicas");
+  }
+
+  //cores tetraédricas
+  else if (keyPressed && keyCode == RIGHT) {
+    x = int(random(0, 360));
+    y = (x + 180) % 360; //y é complementar de x
+    z = (x + 120) % 360;
+    t = (z + 180) % 360; //t é complementar de z
+
+    println("Você está pressionando a tecla RIGHT para cores tetraédricas");
+  }
+
+  //cores análogas
+  else if (keyPressed && keyCode == UP) {
+    x = int(random(0, 360));
+    y = (x + 40) % 360;
+    z = (y + 40) % 360; //distância de 40 graus entre cada uma das três cores
+
+
+    println("Você está pressionando a tecla UP para cores análogas");
+  }
+
+  //cores complementares divididas
+  else if (keyPressed && keyCode == DOWN) {
+    x = int(random(0, 360));
+    y = (x + 160) % 360; // 180 - metade de 40
+    z = (y + 40) % 360; //y e z distam 40 graus
+
+    println("Você está pressionando a tecla DOWN para cores complementares divididas");
+  }
+
+  //diminui brilho
+  else if (mousePressed && mouseButton == LEFT && b1>0 && b2>0) {
+    b1 -= 10;
+    b2 -= 10;
+
+    println("Você está pressionando o botão LEFT do mouse para reduzir o brilho em -10");
+  }
+
+  //aumenta brilho
+  else if (mousePressed && mouseButton == RIGHT && b1<100 && b2<100) {
+    b1 += 10;
+    b2 += 10;
+
+    println("Você está pressionando o botão RIGHT do mouse para aumentar o brilho em +10");
+  }
+}
